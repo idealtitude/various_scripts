@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 app_name="qac"
-app_version="0.1.1"
+app_version="0.1.2"
 
 declare -A colors
 colors["black"]="\033[30m"
@@ -13,6 +13,33 @@ colors["magenta"]="\033[35m"
 colors["cyan"]="\033[36m"
 colors["white"]="\033[37m"
 colors["reset"]="\033[0m"
+
+colors["black_inv"]="\033[40m"
+colors["red_inv"]="\033[41m"
+colors["green_inv"]="\033[42m"
+colors["yellow_inv"]="\033[43m"
+colors["blue_inv"]="\033[44m"
+colors["magenta_inv"]="\033[45m"
+colors["cyan_inv"]="\033[46m"
+colors["white_inv"]="\033[47m"
+
+colors["black_alt"]="\033[90m"
+colors["red_alt"]="\033[91m"
+colors["green_alt"]="\033[92m"
+colors["yellow_alt"]="\033[93m"
+colors["blue_alt"]="\033[94m"
+colors["magenta_alt"]="\033[95m"
+colors["cyan_alt"]="\033[96m"
+colors["white_alt"]="\033[97m"
+
+colors["black_inv_alt"]="\033[100m"
+colors["red_inv_alt"]="\033[101m"
+colors["green_inv_alt"]="\033[102m"
+colors["yellow_inv_alt"]="\033[103m"
+colors["blue_inv_alt"]="\033[104m"
+colors["magenta_inv_alt"]="\033[105m"
+colors["cyan_inv_alt"]="\033[106m"
+colors["white_inv_alt"]="\033[107m"
 
 declare -A styles
 styles["bold"]="\033[1m"
