@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 
-app_version="0.2.6"
+app_version="0.2.7"
 help_message="Usage: qc [TEMPLATE] [NAME] [OPTIONS]...
 
 Positional arguments:
@@ -169,6 +169,9 @@ if [[ "$#" -ge 2 ]]; then
     	sed -i "s/app/$2/g" "$ncode/.gitignore"
     elif [[ "$1" = "c_ncurses" ]]; then
     	sed -i "s/app/$2/g" "$ncode/Makefile"
+    elif [[ "$1" = "node_starter" ]]; then
+    	sed -i "s/app/$2/g" "$ncode/README.md"
+    	sed -i "s/app/$2/g" "$ncode/.gitignore"
     fi
 
     printf "\033[32mDone!\033[0m\n"
