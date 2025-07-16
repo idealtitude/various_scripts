@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 
-app_version="0.2.7"
+app_version="0.3.2b"
 help_message="Usage: qc [TEMPLATE] [NAME] [OPTIONS]...
 
 Positional arguments:
@@ -117,7 +117,7 @@ if [[ "$#" -ge 2 ]]; then
     otpl="$tpl_path/$1"
     ncode="$PWD/$2"
 
-    printf "\033[1mCopying:\033[0m\n%s\n\033[1min\033[0m\n%s\n" "$otpl" "$ncode"
+    printf "\033[1mSRC:\t\033[0m %s\n\033[1mDEST:\033[0m\t%s\n" "$otpl" "$ncode"
 
     if [[ -d "$ncode" ]]; then
         printf "\033[91mError:\033[0m a folder with this name already exists!\n"
@@ -129,7 +129,7 @@ if [[ "$#" -ge 2 ]]; then
         read -r -p "Rename main file [.|nN]: " newname
 
         if [[ -z "$newname" || "$newname" = "n" || "$newname" = "N" ]]; then
-            printf "\033[32mDone!\033[0m\n"
+            printf "\033[32mExit\033[0m\n"
             exit 0
         fi
 
@@ -137,7 +137,7 @@ if [[ "$#" -ge 2 ]]; then
         mv "$renm" "$ncode/$newname"
     fi
 
-    if [[ "$1" = "c" || "$1" = "cpp" ]]; then
+    if [[ "$1" = "c" || "$1" = "cpp" || "$1" = "c_started" ]]; then
         sed -i "s/{{out}}/$2/" "$ncode/Makefile"
     elif [[ "$1" = "cmake_project" ]]; then
         sed -i "s/{{app}}/$2/" "$ncode/CMakeLists.txt"
@@ -163,18 +163,27 @@ if [[ "$#" -ge 2 ]]; then
         sed -i "s/libname/$2/g" "$ncode/tests/test.c"
         sed -i "s/libname/$2/g" "$ncode/README.md"
         sed -i "s/libname/$2/g" "$ncode/Makefile"
-    elif [[ "$1" = "c_starter" ]]; then
+    elif [[ "$1" = "c_project" ]]; then
     	sed -i "s/app/$2/g" "$ncode/README.md"
     	sed -i "s/app/$2/g" "$ncode/Makefile"
+    	sed -i "s/app/$2/g" "$ncode/doc/app.md"
+    	mv "$ncode/doc/app.md" "$ncode/doc/$2.md"
+    	sed -i "s/app/$2/g" "$ncode/src/main.c"
+    	sed -i "s/app/$2/g" "$ncode/src/init.h"
     	sed -i "s/app/$2/g" "$ncode/.gitignore"
     elif [[ "$1" = "c_ncurses" ]]; then
     	sed -i "s/app/$2/g" "$ncode/Makefile"
     elif [[ "$1" = "node_starter" ]]; then
     	sed -i "s/app/$2/g" "$ncode/README.md"
     	sed -i "s/app/$2/g" "$ncode/.gitignore"
+    elif [[ "$1" = "doc" ]]; then
+        get_dnow=$(date +"%Y-%m-%d %H:%M:%S")
+    	sed -i "s/documentation/$2/g" "$ncode/doc.md"
+    	sed -i "s/Date:\*\*/Date:\*\* $get_dnow/" "$ncode/doc.md"
+    	sed -i "s/documentation/$2/g" "$ncode/Makefile"
+    	mv "$ncode/doc.md" "$ncode/$2.md"
     fi
 
-    printf "\033[32mDone!\033[0m\n"
     exit 0
   else
     printf "Error: template argument \"%s\" not found\n" "$1"

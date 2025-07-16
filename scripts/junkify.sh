@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-app_version='0.1.0'
+app_version='0.1.1'
 app_name='junkify'
 app_help="Usage: $app_name [NAME] [OPTIONS]...
 
@@ -105,6 +105,11 @@ new_junk_file="$junk_path/$junk_name/$junk_name.$junk_ext"
 
 mkdir -p "$new_junk_dir"
 touch "$new_junk_file"
+
+if [[ "$junk_open" -eq 1 && "$junk_repl" -eq 0 ]]; then
+    command "$junk_editor" "$new_junk_file"
+    exit 0
+fi
 
 if [[ "$junk_repl" -eq 1 ]]; then
 	interactive "$new_junk_dir" "$new_junk_file" "$junk_editor" "$junk_open"
